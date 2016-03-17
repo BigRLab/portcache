@@ -4,7 +4,7 @@ from setuptools import setup
 setup(name='portcache',
       version='0.2',
       description='A simple cache for port from remote service',
-      url='http://github.com/storborg/funniest',
+      url='https://github.com/oneraghavan/portcache',
       author='Raghavan',
       author_email='oneraghavan@gmail.com',
       license='MIT',
