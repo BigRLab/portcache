@@ -2,7 +2,7 @@ from setuptools import setup
 
 
 setup(name='portcache',
-      version='0.1',
+      version='0.2',
       description='A simple cache for port from remote service',
       url='http://github.com/storborg/funniest',
       author='Raghavan',
@@ -37,6 +37,6 @@ print "\nportcache is a cache for remote calls . In microservices world, we have
       "localport: 9090 \n" \
       "remote: http://myremoteserviceurl.com \n" \
       "cache_file: \"/data/tmp/merch \n\n" \
-      "Starting with this config file, starts a server at port 9090.Whenever a request comes to the localhost:9090, it will check if this request \n" \
-      "has been already cached ,if yes then it will serve from cache file, else it will call the http://myremoteserviceurl.com with the request,\n" \
-      "cache and return the response"
+      "Starting with this config file, starts a server at port 9090.Whenever a request comes to the localhost:9090, it \n" \
+      "will check if this request has been already cached ,if yes then it will serve from cache file, else it will call \n" \
+      "the http://myremoteserviceurl.com with the request, cache and return the response"
