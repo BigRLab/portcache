@@ -1,3 +1,4 @@
+import socket
 import web
 import yaml
 import shelve
@@ -58,7 +59,13 @@ def start_port_cache():
 
     app = MyApplication(urls, globals())
     print_startup_message(web.config)
-    app.run(port=web.config['localport'])
+    try:
+        app.run(port=web.config['localport'])
+    except socket.error as e :
+        print "There is already an application server running in port : " + str(web.config['localport'])
+        print e.message
+        sys.exit()
+
 
 
 if __name__ == "__main__":
