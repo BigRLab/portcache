@@ -2,7 +2,7 @@ from setuptools import setup
 
 
 setup(name='portcache',
-      version='0.2',
+      version='0.3      ',
       description='A simple cache for port from remote service',
       url='https://github.com/oneraghavan/portcache',
       author='Raghavan',
@@ -10,7 +10,7 @@ setup(name='portcache',
       license='MIT',
       packages=['portcache'],
       install_requires=[
-          'web.py', 'PyYAML'
+          'web.py', 'PyYAML' , 'requests'
       ],
       zip_safe=False,
       entry_points={

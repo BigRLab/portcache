@@ -1,9 +1,10 @@
 import socket
+import shelve
+import sys
+
 import web
 import yaml
-import shelve
-import urllib2
-import sys
+import requests
 
 urls = (
     '/(.*)', 'index'
@@ -18,10 +19,18 @@ class index:
             return web.store_cache.get(relative_path)
         else:
             print "Not in cache , hitting the remote"
-            response = urllib2.urlopen(web.config['remote'] + relative_path).read()
-            web.store_cache[relative_path] = response
+            response = requests.get(web.config['remote'] + relative_path)
+            raw_response = response.text
+            try:
+                response.raise_for_status()
+            except Exception as e:
+                print "Request failed with status code " + str(response.status_code) + " ,hence not caching the request"
+                print e.message
+                return web.InternalError()
+                print "coming here"
+            web.store_cache[relative_path] = raw_response
             web.store_cache.sync()
-        return response
+        return raw_response
 
 
 class MyApplication(web.application):
@@ -43,8 +52,9 @@ def validate(config_file):
 
 
 def print_startup_message(config):
-    print "Starting portcache , the localport:" + str(config['localport']) + " is a cache for remote service " + str(web.config[
-        'remote'])
+    print "Starting portcache , the localport:" + str(config['localport']) + " is a cache for remote service " + str(
+        web.config[
+            'remote'])
 
 
 def start_port_cache():
@@ -61,11 +71,10 @@ def start_port_cache():
     print_startup_message(web.config)
     try:
         app.run(port=web.config['localport'])
-    except socket.error as e :
+    except socket.error as e:
         print "There is already an application server running in port : " + str(web.config['localport'])
         print e.message
         sys.exit()
-
 
 
 if __name__ == "__main__":
